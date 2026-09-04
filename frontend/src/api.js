@@ -1,25 +1,43 @@
+```js
 const API_URL =
   import.meta.env.VITE_API_URL ||
-  "http://localhost:5000/api";
+  "https://onefi-sde-fullstack-assignment.onrender.com/api";
 
 export async function getProducts() {
-  const response = await fetch(`${API_URL}/products`);
+  try {
+    const response = await fetch(`${API_URL}/products`);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch products");
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    console.log("Products API response:", result);
+
+    return result.data || [];
+  } catch (error) {
+    console.error("Products fetch error:", error);
+    throw error;
   }
-
-  const result = await response.json();
-  return result.data;
 }
 
 export async function getProduct(slug) {
-  const response = await fetch(`${API_URL}/products/${slug}`);
+  try {
+    const response = await fetch(`${API_URL}/products/${slug}`);
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch product");
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    console.log("Product API response:", result);
+
+    return result.data;
+  } catch (error) {
+    console.error("Product fetch error:", error);
+    throw error;
   }
-
-  const result = await response.json();
-  return result.data;
 }
+```
