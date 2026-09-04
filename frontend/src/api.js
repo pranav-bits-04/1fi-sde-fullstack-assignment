@@ -4,11 +4,12 @@ const API_URL =
 
 export async function getProducts() {
   const response = await fetch(`${API_URL}/products`, {
+    method: "GET",
     cache: "no-store",
   });
 
-  if (!response.ok && response.status !== 304) {
-    throw new Error("Failed to fetch products");
+  if (!response.ok) {
+    throw new Error(`Failed to fetch products: ${response.status}`);
   }
 
   const result = await response.json();
@@ -20,11 +21,12 @@ export async function getProducts() {
 
 export async function getProduct(slug) {
   const response = await fetch(`${API_URL}/products/${slug}`, {
+    method: "GET",
     cache: "no-store",
   });
 
-  if (!response.ok && response.status !== 304) {
-    throw new Error("Failed to fetch product");
+  if (!response.ok) {
+    throw new Error(`Failed to fetch product: ${response.status}`);
   }
 
   const result = await response.json();
