@@ -1,15 +1,25 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:5000/api";
 
-async function request(path) {
-  const response = await fetch(`${API_URL}${path}`);
-  const payload = await response.json();
+export async function getProducts() {
+  const response = await fetch(`${API_URL}/products`);
 
   if (!response.ok) {
-    throw new Error(payload.message || "Request failed");
+    throw new Error("Failed to fetch products");
   }
 
-  return payload.data;
+  const result = await response.json();
+  return result.data;
 }
 
-export const getProducts = () => request("/products");
-export const getProduct = (slug) => request(`/products/${slug}`);
+export async function getProduct(slug) {
+  const response = await fetch(`${API_URL}/products/${slug}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch product");
+  }
+
+  const result = await response.json();
+  return result.data;
+}
