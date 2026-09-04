@@ -3,9 +3,11 @@ const API_URL =
   "https://onefi-sde-fullstack-assignment.onrender.com/api";
 
 export async function getProducts() {
-  const response = await fetch(`${API_URL}/products`);
+  const response = await fetch(`${API_URL}/products`, {
+    cache: "no-store",
+  });
 
-  if (!response.ok) {
+  if (!response.ok && response.status !== 304) {
     throw new Error("Failed to fetch products");
   }
 
@@ -17,9 +19,11 @@ export async function getProducts() {
 }
 
 export async function getProduct(slug) {
-  const response = await fetch(`${API_URL}/products/${slug}`);
+  const response = await fetch(`${API_URL}/products/${slug}`, {
+    cache: "no-store",
+  });
 
-  if (!response.ok) {
+  if (!response.ok && response.status !== 304) {
     throw new Error("Failed to fetch product");
   }
 
